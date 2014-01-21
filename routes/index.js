@@ -38,7 +38,7 @@ exports.loginUser = function(req, res) {
         obj[u] = p;
         dataArray.push(obj);
 	console.log('Pushed!'+  JSON.stringify(dataArray[counter]));
-	counter ++;
+//	counter ++;
 	res.render('login');
 };
 
@@ -62,22 +62,22 @@ exports.viewUser = function(req, res) {
 			   if(boolValidation)
 			   {
 				   var myString = num + "Valid";
-	    			   counter += 1;
 				   if(myString.length > "Valid".length)
 				   {
-					   res.write(myString + "   " + delay + "\n");
-				   	   console.log(myString + "   " + delay + "\n");
+					   res.write(myString + " Delay  " + delay + "\n");
+				   	   console.log(myString + " Delay  " + delay + "\n");
 				   }
+	    			   counter += 1;
 			   }
 		    	   else
 		           {
 				   var myString = num + "Invalid";
-	    			   counter += 1;
 				   if(myString.length > "Invalid".length)
 				   {
-					   res.write(myString + "   " + delay + "\n");
-				   	   console.log(myString + "   " + delay + "\n");
+					   res.write(myString + " Delay  " + delay + "\n");
+				   	   console.log(myString + " Delay  " + delay + "\n");
 				   }
+	    			   counter += 1;
 			   }
 			    return doneCallback(null, num);
 		    }, delay);
