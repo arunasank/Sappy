@@ -1,0 +1,17 @@
+On URL provided
+	render login screen
+
+	User enters username and password.
+
+	If user presses login button
+		Store the username, password entered in a global array A
+		Render the login screen
+
+	If user pressed View button
+		Render the view screen
+		pass global array A to an asynchronous mapping function
+
+	asynchronous mapping function
+		pass each element of the array A to the iterator function
+		which calls the setTimeout() function to print each element
+		of the array after a random delay
