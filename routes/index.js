@@ -1,6 +1,7 @@
 var dataArray = [];
 var counter  = 0;
 var async = require('async');
+var viewsFlag = false;
 /*
  * GET home page.
  */
@@ -33,7 +34,10 @@ exports.login = function(req, res) {
  *   */
 
 exports.loginUser = function(req, res) {
+	var obj;
 
+	if(!viewsFlag)
+	{
 	//get Username that was pushed. Note: *username* is the "name" 
 	//tag used in the HTML form for the Username field(views/login.jade)
 	u = req.body.username;
@@ -43,23 +47,40 @@ exports.loginUser = function(req, res) {
 
 	//Create an empty object, associative array type to associate
 	//the username(key) with the password(value)
-	var obj = {};
+	obj = {};
         obj[u] = p;
 
 	//Push the object into the dataArray (global)
 	dataArray.push(obj);
-	console.log('Pushed!'+  JSON.stringify(dataArray[counter]));
+	console.log('Pushed!'+  JSON.stringify(obj));
 
 	//counter ++;
 	
 	//Render the login screen when the "LOGIN" button is pressed
 	//so that the user can continue rapid-firing the uname, pword.
 	res.render('login');
+	}
+	else
+	{
+		dataArray.length = 0;
+		viewsFlag = false;
+		u = req.body.username;
+		p = req.body.password;
+		obj = {};
+        	obj[u] = p;
+		dataArray.push(obj);
+		console.log('Pushed!'+  JSON.stringify(obj));
+		res.render('login');
+
+	}
 };
 
 
 
 exports.viewUser = function(req, res) {
+	
+	viewsFlag = true;
+	var myString;
 	//Split the dataArray which contains elements in {:},{:} format on every '}'	
 	var u = JSON.stringify(dataArray).split('}');
 	
@@ -88,11 +109,12 @@ exports.viewUser = function(req, res) {
 				//Print valid if the validation is successful
 			   if(boolValidation)
 			   {
-				   var myString = num + "Valid";
+				   myString = num + "Valid";
                                    if(myString.length > "Valid".length)
                                    {
-                                           res.write(myString + " Delay  " + delay + "\n");
-                                           console.log(myString + " Delay  " + delay + "\n");
+                                           res.write(num + " Valid  Delay  " + delay + "\n");
+                //                           console.log(myString + " Delay  " + delay + "\n");
+					   console.log(num + " Valid  " + " Delay " + delay + "\n"); 
                                    }
                                    counter += 1;
 
@@ -100,11 +122,11 @@ exports.viewUser = function(req, res) {
 				//Print invalid if the validation is unsuccessful
 		    	   else
 		           {
-					var myString = num + "Invalid";
+					myString = num + "Invalid";
                                    if(myString.length > "Invalid".length)
                                    {
-                                           res.write(myString + " Delay  " + delay + "\n");
-                                           console.log(myString + " Delay  " + delay + "\n");
+                                           res.write(num + " Invalid  Delay  " + delay + "\n");
+					   console.log(num + " Invalid  " + " Delay " + delay + "\n"); 
                                    }
                                    counter += 1;
 
